@@ -1,7 +1,8 @@
+import torch
 from transformers import pipeline
 
 class Zero_Shot_Classifier:
-    def __init__(self, classes, random_seed=42, device=0):
+    def __init__(self, classes, random_seed=42):
         """
         Initializes the zero-shot classifier with a fixed random seed for consistency.
 
@@ -10,6 +11,13 @@ class Zero_Shot_Classifier:
             random_seed (int): Random seed for reproducibility (default=42).
             device (int): Determines whether to run on CPU or GPU
         """
+        # 1. Check for GPU availability using PyTorch
+        if torch.cuda.is_available():
+            # Use the specified device (defaulting to 'cuda:0')
+            device = 0
+        else:
+            # Fallback to CPU
+            device = -1
         self.hypothesis_template = "This text is about {}"
         self.classes = classes
 

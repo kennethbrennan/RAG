@@ -1,8 +1,17 @@
+import torch
 from transformers import pipeline
 
 class Summarizer:
     def __init__(self):
-        self.summarizer = pipeline("summarization", model="facebook/bart-large-cnn", device=0)
+        # 1. Check for GPU availability using PyTorch
+        if torch.cuda.is_available():
+            # Use the specified device (defaulting to 'cuda:0')
+            device = 0
+        else:
+            # Fallback to CPU
+            device = -1
+
+        self.summarizer = pipeline("summarization", model="facebook/bart-large-cnn", device=device)
 
     def summarize(self, text, max_length=150, min_length=30):
         #print(f"Summarizing text: {text}")

@@ -21,7 +21,7 @@ class LLM:
                 print(f"✅ GPU available. Initializing {model_name} on {actual_device} with temperature={temperature}")
             else:
                 # Fallback to CPU
-                actual_device = "cpu"
+                actual_device = -1
                 print(f"⚠️ No GPU detected or available. Initializing {model_name} on {actual_device} with temperature={temperature}")
 
             # 2. Initialize the model with the determined device
